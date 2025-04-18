@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import (
    QLabel, QPushButton, QListWidget,
    QHBoxLayout, QVBoxLayout
 )
+import os
 #add comment asdasd
 
 app = QApplication([])
@@ -40,6 +41,31 @@ col2.addLayout(row_tools)
 row.addLayout(col1, 20)
 row.addLayout(col2, 80)
 win.setLayout(row)
+
+workdir = ""
+def filter(files, extensions):
+   result = []
+   for filename in files:
+       for ext in extensions:
+           if filename.endswith(ext):
+               result.append(filename)
+   return result
+ 
+def chooseWorkdir():
+   global workdir
+   workdir = QFileDialog.getExistingDirectory()
+ 
+def showFilenamesList():
+   extensions = ['.jpg','.jpeg', '.png', '.gif', '.bmp']
+   chooseWorkdir()
+   filenames = filter(os.listdir(workdir), extensions)
+ 
+   lw_files.clear()
+   for filename in filenames:
+       lw_files.addItem(filename)
+ 
+btn_dir.clicked.connect(showFilenamesList)
+
 
 
 win.show()
