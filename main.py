@@ -1,11 +1,11 @@
+import os
 from PyQt5.QtWidgets import (
    QApplication, QWidget,
    QFileDialog, # Діалог відкриття файлів (і папок)
    QLabel, QPushButton, QListWidget,
    QHBoxLayout, QVBoxLayout
 )
-import os
-#add comment asdasd
+
 
 app = QApplication([])
 win = QWidget()       
@@ -42,7 +42,13 @@ row.addLayout(col1, 20)
 row.addLayout(col2, 80)
 win.setLayout(row)
 
-workdir = ""
+
+win.show()
+
+
+workdir = ''
+
+
 def filter(files, extensions):
    result = []
    for filename in files:
@@ -50,23 +56,21 @@ def filter(files, extensions):
            if filename.endswith(ext):
                result.append(filename)
    return result
- 
+
+
 def chooseWorkdir():
    global workdir
    workdir = QFileDialog.getExistingDirectory()
- 
+
+
 def showFilenamesList():
    extensions = ['.jpg','.jpeg', '.png', '.gif', '.bmp']
    chooseWorkdir()
    filenames = filter(os.listdir(workdir), extensions)
- 
    lw_files.clear()
    for filename in filenames:
        lw_files.addItem(filename)
- 
+
+
 btn_dir.clicked.connect(showFilenamesList)
-
-
-
-win.show()
 app.exec()
